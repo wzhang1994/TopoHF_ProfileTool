@@ -1,0 +1,16 @@
+#!/bin/zsh
+# step1  数据的整合
+HF_dir=~/ownCloud/Data/Heat_flow
+
+#awk -F, '$14!=NaN && NR>1 {print $1,$2,$14}' $HF_dir/Geothopica/heat_flow_values.csv > 1.tmp
+
+#2023Jan17 - 增加Geothopica热流数据
+awk 'NR>1 {print }' Database/Geothopica.dat > 1.tmp
+# awk -F';' 'NR>1 {print $6,$5,$2}' $HF_dir/IHFC/IHFC_2021_GHFDB.csv > 2.tmp
+awk -F';' 'NR>3 {print }' Database/IHFC_2024_GHFDB_extractDATA.xyz > 2.tmp
+
+
+cat *.tmp > ALL.zwt
+echo '数据的整合完成，输出文件 ALL.zwt'
+rm *.tmp
+# step1  数据的整合End
