@@ -65,7 +65,9 @@ cat file_proj_view_rs_1.tmp file_proj_view_rs_2.tmp | sort | uniq > file_proj_vi
 DistanceAB=DistanceAB.dat
 gmt project -C$PxA/$PyA -E$PxB/$PyB -G1 -Q > $DistanceAB
 # distance in AB  
-gmt info $DistanceAB -I100 -i2 -C | read D_AA D_AB
+gmt info $DistanceAB -I0.1 -i2 -C | read D_AA D_AB
+gmt project -C$PxB/$PyB -E$PxC/$PyC -G1 -Q | awk '{print $1,$2,$3+D1}' D1=$D_AB >> $DistanceAB
+
 awk '{print $1+D1,$2,$3}' D1=0 file_proj_1.tmp > file_proj_1AB.tmp
 awk '{print $1+D1,$2,$3}' D1=$D_AB file_proj_2.tmp > file_proj_2AB.tmp
 cat file_proj_1AB.tmp file_proj_2AB.tmp | sort | uniq > file_proj.tmp
@@ -82,7 +84,7 @@ echo "  ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡     Date processing end    !!!!!!!!!!!!!!
 
 ##############################  GMT6 Fig start
 
-gmt info $DistanceAB -I1 | read R
+gmt info $DistanceAB -I2 | read R
 echo $R
 
 xscale=1.1d
